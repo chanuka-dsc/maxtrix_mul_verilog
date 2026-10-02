@@ -1,0 +1,15 @@
+*.cache/
+*.sim/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.jou
+*.log
+*.str
+*.wdb
+.Xil/
+xsim.dir/
+__MACOSX/
+.DS_Store
+*.pdf
+*.zip
