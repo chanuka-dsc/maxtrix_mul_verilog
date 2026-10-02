@@ -97,6 +97,36 @@ module MAC #
 );
 
 //TODO
+// clear = 1 loads 0 into regAcc. 
+// First operands of a new element must arrive at the same edge as clear. 
+// data_R (= sum) holds the finished total for ONE clock cycle: ...
+     reg [DATA_WIDTH-1 : 0]regA;
+     reg [DATA_WIDTH-1 : 0] regB;
+     reg [DATA_WIDTH-1 : 0] regAcc;
+     
+     wire [DATA_WIDTH-1 : 0] product;
+     wire [DATA_WIDTH-1 : 0] sum;
+     
+     assign product = regA * regB;
+     assign sum = product + regAcc;
+     
+     always @(posedge s00_axi_aclk) begin
+        if(!s00_axi_aresetn) begin
+            regAcc <= 0;
+            regA <= 0;
+            regB <= 0;
+        end
+        else begin
+            regA <= data_A;
+            regB <= data_B;
+            if (clear)
+                regAcc <= 0;
+            else
+                regAcc <=  sum;
+        end
+     end
+    
+     assign data_R = sum; 
 
 endmodule
 
